@@ -1,5 +1,6 @@
 <?php
 
+// Development Connection
 $host = 'localhost';
 $db = 'attendance_db';
 $user = 'root';
