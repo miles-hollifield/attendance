@@ -13,6 +13,7 @@ if (isset($_POST['submit'])) {
     $specialty = $_POST['specialty'];
     // call function to insert and track if success or not
     $isSuccess = $crud->insertAttendees($fname, $lname, $dob, $email, $contact, $specialty);
+    $specialtyName = $crud->getSpecialtyById($specialty);
 
     if ($isSuccess) {
         // echo success
@@ -30,7 +31,7 @@ if (isset($_POST['submit'])) {
             <?php echo $_POST['firstname'] . ' ' . $_POST['lastname']; ?>
         </h5>
         <h6 class="card-subtitle mb-2 text-muted">
-            <?php echo $_POST['specialty']; ?>
+            <?php echo $specialtyName['name'];  ?>
         </h6>
         <p class="card-text">Date of Birth:
             <?php echo $_POST['dob']; ?>
