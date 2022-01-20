@@ -12,11 +12,11 @@ class crud
     }
 
     // function to insert a new record into the attendee database
-    public function insertAttendees($fname, $lname, $dob, $email, $contact, $specialty)
+    public function insertAttendees($fname, $lname, $dob, $email, $contact, $specialty, $avatar_path)
     {
         try {
             // define sql statement to be executed
-            $sql = "INSERT INTO attendee (firstname, lastname, dateofbirth, emailaddress, contactnumber, specialty_id) VALUES (:fname, :lname, :dob, :email, :contact, :specialty)";
+            $sql = "INSERT INTO attendee (firstname, lastname, dateofbirth, emailaddress, contactnumber, specialty_id, avatar_path) VALUES (:fname, :lname, :dob, :email, :contact, :specialty, :avatar_path)";
             $stmt = $this->db->prepare($sql);
             // bind all placeholders to the actual values
             $stmt->bindparam(':fname', $fname);
@@ -25,6 +25,7 @@ class crud
             $stmt->bindparam(':email', $email);
             $stmt->bindparam(':contact', $contact);
             $stmt->bindparam(':specialty', $specialty);
+            $stmt->bindparam(':avatar_path', $avatar_path);
             //execute statement
             $stmt->execute();
             return true;
@@ -103,6 +104,21 @@ class crud
         try {
             $sql = "SELECT * FROM `specialties`";
             $result = $this->db->query($sql);
+            return $result;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    public function getSpecialtyById($id)
+    {
+        try {
+            $sql = "SELECT * FROM `specialties` where specialty_id = :id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindparam(':id', $id);
+            $stmt->execute();
+            $result = $stmt->fetch();
             return $result;
         } catch (PDOException $e) {
             echo $e->getMessage();
